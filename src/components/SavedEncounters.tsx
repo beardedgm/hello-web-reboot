@@ -21,6 +21,17 @@ export function SavedEncounters({ onLoadEncounter }: SavedEncountersProps) {
 
   useEffect(() => {
     loadEncounters();
+    
+    // Listen for encounter saved events
+    const handleEncounterSaved = () => {
+      loadEncounters();
+    };
+    
+    window.addEventListener('encounterSaved', handleEncounterSaved);
+    
+    return () => {
+      window.removeEventListener('encounterSaved', handleEncounterSaved);
+    };
   }, []);
 
   const loadEncounters = () => {
